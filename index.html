@@ -20,6 +20,9 @@
                     animation: {
                         'gradient': 'gradient 8s ease infinite',
                         'float': 'float 6s ease-in-out infinite',
+                        'fadeIn': 'fadeIn 2s ease-in forwards',
+                        'spin': 'spin 4s linear infinite',
+                        'pulse': 'pulse 2s infinite',
                     },
                     keyframes: {
                         gradient: {
@@ -35,6 +38,10 @@
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
                         },
                     },
                 },
@@ -81,7 +88,7 @@
                     <a href="/" class="group flex items-center space-x-2">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] transition-all duration-300">
                             <div class="w-full h-full rounded-full bg-black flex items-center justify-center">
-                                <span class="text-2xl">🎧</span>
+                                <span class="text-2xl animate-pulse">🎧</span>
                             </div>
                         </div>
                         <span class="text-xl font-bold gradient-text">Din Podcast</span>
@@ -133,7 +140,7 @@
         </div>
 
         <!-- Content -->
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fadeIn">
             <div class="space-y-8">
                 <h1 class="text-5xl md:text-7xl font-bold tracking-tight">
                     <span class="block">Velkommen til</span>
@@ -145,7 +152,7 @@
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#episodes" class="inline-flex items-center px-8 py-3 rounded-full text-lg font-medium bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-300">
                         Lyt Nu
-                        <svg class="ml-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="ml-2 w-5 h-5 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                         </svg>
                     </a>
@@ -176,9 +183,12 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Episode Card -->
-                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <img src="episode-billede1.jpg" alt="Episode 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <img src="episode-billede1.jpg" alt="Episode 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-4">
@@ -195,7 +205,7 @@
                         </p>
                         <button @click="showPlayer = true; currentEpisode = { title: 'Episode 1: Titel på Episode', src: 'episode1.mp3' }" class="inline-flex items-center text-pink-500 hover:text-pink-400 transition-colors">
                             Lyt Nu
-                            <svg class="ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="ml-2 w-4 h-4 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path x-show="!showPlayer" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.032 3.507A1 1 0 017 13.779V6.221a1 1 0 011.72-.705l6.032 3.507a1 1 0 010 1.745z"/>
                                 <path x-show="showPlayer" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/>
                             </svg>
@@ -204,9 +214,12 @@
                 </article>
                 <!-- Repeat episode cards as needed -->
                 <!-- Episode Card 2 -->
-                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <img src="episode-billede2.jpg" alt="Episode 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <img src="episode-billede2.jpg" alt="Episode 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-4">
@@ -223,7 +236,7 @@
                         </p>
                         <button @click="showPlayer = true; currentEpisode = { title: 'Episode 2: Anden Episode Titel', src: 'episode2.mp3' }" class="inline-flex items-center text-blue-500 hover:text-blue-400 transition-colors">
                             Lyt Nu
-                            <svg class="ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="ml-2 w-4 h-4 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path x-show="!showPlayer" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.032 3.507A1 1 0 017 13.779V6.221a1 1 0 011.72-.705l6.032 3.507a1 1 0 010 1.745z"/>
                                 <path x-show="showPlayer" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/>
                             </svg>
@@ -231,9 +244,12 @@
                     </div>
                 </article>
                 <!-- Episode Card 3 -->
-                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                    <div class="aspect-w-16 aspect-h-9">
-                        <img src="episode-billede3.jpg" alt="Episode 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+                    <div class="relative">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <img src="episode-billede3.jpg" alt="Episode 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-4">
@@ -250,7 +266,7 @@
                         </p>
                         <button @click="showPlayer = true; currentEpisode = { title: 'Episode 3: Tredje Episode Titel', src: 'episode3.mp3' }" class="inline-flex items-center text-green-500 hover:text-green-400 transition-colors">
                             Lyt Nu
-                            <svg class="ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="ml-2 w-4 h-4 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path x-show="!showPlayer" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.032 3.507A1 1 0 017 13.779V6.221a1 1 0 011.72-.705l6.032 3.507a1 1 0 010 1.745z"/>
                                 <path x-show="showPlayer" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/>
                             </svg>
@@ -288,7 +304,7 @@
             <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 blur-3xl"></div>
         </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold gradient-text">Om Podcasten</h2>
                 <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto">
@@ -297,8 +313,45 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature Cards (Samme som før) -->
-                <!-- ... -->
+                <!-- Feature Card -->
+                <div class="bg-[#1E293B]/50 backdrop-blur-lg rounded-2xl p-6 hover:bg-[#1E293B]/70 transform hover:scale-105 transition-all duration-300">
+                    <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <!-- Icon path here -->
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Inspirerende Gæster</h3>
+                    <p class="text-gray-400">
+                        Vi inviterer eksperter og pionerer inden for [emne] til at dele deres unikke perspektiver.
+                    </p>
+                </div>
+                <!-- Feature Card 2 -->
+                <div class="bg-[#1E293B]/50 backdrop-blur-lg rounded-2xl p-6 hover:bg-[#1E293B]/70 transform hover:scale-105 transition-all duration-300">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <!-- Icon path here -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h1l3 10h11"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Dybdegående Emner</h3>
+                    <p class="text-gray-400">
+                        Vi dykker ned i komplekse emner og gør dem forståelige og relevante for vores lyttere.
+                    </p>
+                </div>
+                <!-- Feature Card 3 -->
+                <div class="bg-[#1E293B]/50 backdrop-blur-lg rounded-2xl p-6 hover:bg-[#1E293B]/70 transform hover:scale-105 transition-all duration-300">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-red-500 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <!-- Icon path here -->
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Engagerende Indhold</h3>
+                    <p class="text-gray-400">
+                        Vores episoder er designet til at holde dig engageret fra start til slut med spændende historier og indsigter.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -306,11 +359,64 @@
     <!-- Footer -->
     <footer class="bg-[#0F172A] py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- About Section in Footer -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Om Os</h3>
+                    <p class="text-gray-400">
+                        Din Podcast er dedikeret til at bringe dig inspirerende samtaler og dybdegående indsigter om [emne]. Følg os på vores rejse for at opdage nye perspektiver.
+                    </p>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Hurtige Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#episodes" class="text-gray-400 hover:text-pink-500 transition-colors">Episoder</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-pink-500 transition-colors">Om</a></li>
+                        <!-- Add more links if needed -->
+                    </ul>
+                </div>
+                <!-- Newsletter Subscription -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Tilmeld Nyhedsbrev</h3>
+                    <p class="text-gray-400 mb-4">
+                        Få de seneste opdateringer direkte i din indbakke.
+                    </p>
+                    <form action="#" method="POST" class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Din Email" required class="w-full p-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:ring-2 focus:ring-pink-500 focus:outline-none transition duration-300">
+                        <button type="submit" class="w-full py-3 rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-300 text-lg font-medium">
+                            Tilmeld
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-500 text-center md:text-left">&copy; 2024 Din Podcast Titel. Alle rettigheder forbeholdes.</p>
                 <div class="mt-4 md:mt-0 flex space-x-6">
-                    <!-- Social Media Icons (Samme som før) -->
-                    <!-- ... -->
+                    <a href="#" class="text-gray-500 hover:text-pink-500 transition-colors">
+                        <span class="sr-only">Facebook</span>
+                        <!-- Facebook Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <!-- Facebook SVG Path -->
+                            <path d="M22 12C22 6.477 17.523 2 12 2S2 6.477 2 12c0 5.006 3.657 9.129 8.438 9.878v-6.987H7.897v-2.89h2.541V9.845c0-2.507 1.493-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.459h-1.26c-1.242 0-1.631.772-1.631 1.562v1.874h2.773l-.443 2.89h-2.33V22C18.343 21.129 22 17.006 22 12z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
+                        <span class="sr-only">Twitter</span>
+                        <!-- Twitter Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <!-- Twitter SVG Path -->
+                            <path d="M22.162 5.656c-.793.352-1.644.589-2.538.696a4.48 4.48 0 0 0 1.97-2.477 8.95 8.95 0 0 1-2.833 1.083 4.476 4.476 0 0 0-7.621 4.08 12.696 12.696 0 0 1-9.219-4.676 4.478 4.478 0 0 0 1.386 5.973A4.424 4.424 0 0 1 1.64 9.096v.056a4.478 4.478 0 0 0 3.59 4.387 4.437 4.437 0 0 1-2.018.077 4.48 4.48 0 0 0 4.184 3.112A8.976 8.976 0 0 1 .927 19.554a12.676 12.676 0 0 0 6.89 2.023c8.266 0 12.787-6.848 12.787-12.786 0-.195-.005-.39-.014-.584a9.126 9.126 0 0 0 2.233-2.331z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-purple-500 transition-colors">
+                        <span class="sr-only">Instagram</span>
+                        <!-- Instagram Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <!-- Instagram SVG Path -->
+                            <path d="M7.75 2h8.5C19.544 2 22 4.456 22 7.75v8.5C22 19.544 19.544 22 16.25 22h-8.5C4.456 22 2 19.544 2 16.25v-8.5C2 4.456 4.456 2 7.75 2zm0 2C5.679 4 4 5.679 4 7.75v8.5C4 18.321 5.679 20 7.75 20h8.5C18.321 20 20 18.321 20 16.25v-8.5C20 5.679 18.321 4 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 .001 6.001A3 3 0 0 0 12 9zm4.5-3.5a1 1 0 1 1-2.001-.001A1 1 0 0 1 16.5 5.5z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
