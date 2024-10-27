@@ -9,46 +9,6 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Custom Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'space-grotesk': ['Space Grotesk', 'sans-serif'],
-                    },
-                    animation: {
-                        'gradient': 'gradient 8s ease infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'fadeIn': 'fadeIn 2s ease-in forwards',
-                        'spin': 'spin 4s linear infinite',
-                        'pulse': 'pulse 2s infinite',
-                    },
-                    keyframes: {
-                        gradient: {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center',
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center',
-                            },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: 0 },
-                            '100%': { opacity: 1 },
-                        },
-                    },
-                },
-            },
-        }
-    </script>
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -56,6 +16,11 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.5/cdn.min.js"></script>
 
     <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Custom JavaScript -->
+    <script defer src="scripts.js"></script>
+
     <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
@@ -67,50 +32,72 @@
         .gradient-text {
             background: linear-gradient(to right, #FF6B6B, #4ECDC4);
             -webkit-background-clip: text;
-            background-clip: text;
             color: transparent;
-            animation: gradient 8s ease infinite;
         }
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+            color: white;
+            font-size: 1.5rem;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .floating-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
-<body class="bg-[#0F172A] text-white" x-data="{ isOpen: false, isScrolled: false, showPlayer: false, currentEpisode: null }" @scroll.window="isScrolled = window.pageYOffset > 20">
+<body class="bg-gradient-to-b from-[#0F172A] to-[#1E293B] text-white" x-data="{ isOpen: false, isScrolled: false }" @scroll.window="isScrolled = window.pageYOffset > 20">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 transition-all duration-300"
-         :class="{ 'glass-effect bg-white/10 backdrop-blur-lg shadow-lg': isScrolled, 'bg-transparent': !isScrolled }">
+    <nav class="fixed w-full z-50 transition-all duration-300" :class="{ 'glass-effect bg-white/10 backdrop-blur-lg shadow-lg': isScrolled, 'bg-transparent': !isScrolled }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="/" class="group flex items-center space-x-2">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] transition-all duration-300">
+                    <a href="/" class="group flex items-center space-x-2" aria-label="Hjem">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[3px] transition-all duration-300">
                             <div class="w-full h-full rounded-full bg-black flex items-center justify-center">
-                                <span class="text-2xl animate-pulse">🎧</span>
+                                <span class="text-3xl animate-pulse">🎧</span>
                             </div>
                         </div>
-                        <span class="text-xl font-bold gradient-text">Din Podcast</span>
+                        <span class="text-2xl font-extrabold gradient-text">Din Podcast</span>
                     </a>
                 </div>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#episodes" class="text-sm font-medium hover:text-pink-500 transition-colors duration-300">Episoder</a>
-                    <a href="#about" class="text-sm font-medium hover:text-pink-500 transition-colors duration-300">Om</a>
-                    <a href="#episodes" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-300">
+                    <a href="#episodes" class="text-base font-semibold hover:text-pink-500 transition-colors duration-300">Episoder</a>
+                    <a href="#about" class="text-base font-semibold hover:text-pink-500 transition-colors duration-300">Om</a>
+                    <a href="#episodes" class="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-110 transition-all duration-300 shadow-md">
                         Lyt Nu
                     </a>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center">
-                    <button @click="isOpen = !isOpen" class="text-white focus:outline-none">
-                        <svg class="w-6 h-6" x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button @click="isOpen = !isOpen" class="text-white focus:outline-none" aria-label="Åbn menu">
+                        <svg class="w-8 h-8" :class="{ 'hidden': isOpen }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
-                        <svg class="w-6 h-6" x-show="isOpen" style="display: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-8 h-8" :class="{ 'hidden': !isOpen }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
@@ -121,8 +108,8 @@
         <!-- Mobile Menu -->
         <div class="md:hidden" x-show="isOpen" x-transition>
             <div class="px-2 pt-2 pb-3 space-y-1 bg-[#1E293B]/90 backdrop-blur-lg">
-                <a href="#episodes" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-white/10 transition-all duration-300">Episoder</a>
-                <a href="#about" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-white/10 transition-all duration-300">Om</a>
+                <a href="#episodes" class="block px-3 py-2 rounded-lg text-base font-semibold hover:bg-white/10 transition-all duration-300">Episoder</a>
+                <a href="#about" class="block px-3 py-2 rounded-lg text-base font-semibold hover:bg-white/10 transition-all duration-300">Om</a>
             </div>
         </div>
     </nav>
@@ -134,293 +121,84 @@
         <div class="absolute inset-0">
             <div class="absolute inset-0 bg-[url('din-baggrundsbillede.jpg')] bg-cover bg-center opacity-10"></div>
             <!-- Animated Circles -->
-            <div class="absolute top-20 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-            <div class="absolute bottom-20 right-20 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -2s;"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -4s;"></div>
+            <div class="absolute top-20 left-20 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-2xl opacity-20 animate-float"></div>
+            <div class="absolute bottom-20 right-20 w-80 h-80 bg-yellow-500 rounded-full mix-blend-multiply filter blur-2xl opacity-20 animate-float" style="animation-delay: -2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-20 animate-float" style="animation-delay: -4s;"></div>
         </div>
 
         <!-- Content -->
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fadeIn">
             <div class="space-y-8">
-                <h1 class="text-5xl md:text-7xl font-bold tracking-tight">
+                <h1 class="text-6xl md:text-8xl font-extrabold tracking-tight leading-tight">
                     <span class="block">Velkommen til</span>
                     <span class="block mt-2 gradient-text">Din Podcast</span>
                 </h1>
-                <p class="max-w-2xl mx-auto text-xl text-gray-300">
+                <p class="max-w-2xl mx-auto text-2xl text-gray-300">
                     Udforsk fascinerende historier og indsigter om [emne] gennem dybdegående samtaler.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#episodes" class="inline-flex items-center px-8 py-3 rounded-full text-lg font-medium bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-300">
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <a href="#episodes" class="inline-flex items-center px-10 py-4 rounded-full text-xl font-semibold bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-110 transition-all duration-300 shadow-lg">
                         Lyt Nu
-                        <svg class="ml-2 w-5 h-5 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="ml-3 w-6 h-6 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                         </svg>
                     </a>
-                    <a href="#about" class="inline-flex items-center px-8 py-3 rounded-full text-lg font-medium border-2 border-white/30 hover:bg-white/10 transition-all duration-300">
+                    <a href="#about" class="inline-flex items-center px-10 py-4 rounded-full text-xl font-semibold border-2 border-white/30 hover:bg-white/10 transform hover:scale-110 transition-all duration-300 shadow-lg">
                         Læs Mere
                     </a>
                 </div>
             </div>
 
             <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <svg class="w-6 h-6 text-white opacity-70" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="scroll-indicator animate-bounce">
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m-7 7l7-7 7 7"/>
                 </svg>
             </div>
         </div>
     </header>
 
-    <!-- Episodes Section -->
-    <section id="episodes" class="py-24 bg-[#1E293B]" x-data="{ showPlayer: false, currentEpisode: null }">
+    <!-- Podcast Player Section -->
+    <section id="episodes" class="py-28 bg-[#1E293B]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold gradient-text">Seneste Episoder</h2>
-                <p class="mt-4 text-xl text-gray-400">
+                <h2 class="text-5xl font-extrabold gradient-text">Seneste Episoder</h2>
+                <p class="mt-4 text-2xl text-gray-400">
                     Dyk ned i vores samling af inspirerende samtaler.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Episode Card -->
-                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-                    <div class="relative">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="episode-billede1.jpg" alt="Episode 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-pink-500/20 text-pink-400">
-                                Ny Episode
-                            </span>
-                            <span class="text-gray-400 text-sm">45 min</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-pink-500 transition-colors">
-                            Episode 1: Titel på Episode
-                        </h3>
-                        <p class="text-gray-400 line-clamp-3 mb-4">
-                            En spændende beskrivelse af episoden der fanger lytterens interesse og giver dem lyst til at høre mere.
-                        </p>
-                        <button @click="showPlayer = true; currentEpisode = { title: 'Episode 1: Titel på Episode', src: 'episode1.mp3' }" class="inline-flex items-center text-pink-500 hover:text-pink-400 transition-colors">
-                            Lyt Nu
-                            <svg class="ml-2 w-4 h-4 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path x-show="!showPlayer" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.032 3.507A1 1 0 017 13.779V6.221a1 1 0 011.72-.705l6.032 3.507a1 1 0 010 1.745z"/>
-                                <path x-show="showPlayer" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </article>
-                <!-- Repeat episode cards as needed -->
-                <!-- Episode Card 2 -->
-                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-                    <div class="relative">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="episode-billede2.jpg" alt="Episode 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400">
-                                Populær
-                            </span>
-                            <span class="text-gray-400 text-sm">60 min</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors">
-                            Episode 2: Anden Episode Titel
-                        </h3>
-                        <p class="text-gray-400 line-clamp-3 mb-4">
-                            En kort beskrivelse af denne episode, der fremhæver de vigtigste emner og gæster.
-                        </p>
-                        <button @click="showPlayer = true; currentEpisode = { title: 'Episode 2: Anden Episode Titel', src: 'episode2.mp3' }" class="inline-flex items-center text-blue-500 hover:text-blue-400 transition-colors">
-                            Lyt Nu
-                            <svg class="ml-2 w-4 h-4 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path x-show="!showPlayer" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.032 3.507A1 1 0 017 13.779V6.221a1 1 0 011.72-.705l6.032 3.507a1 1 0 010 1.745z"/>
-                                <path x-show="showPlayer" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </article>
-                <!-- Episode Card 3 -->
-                <article class="group bg-[#0F172A] rounded-2xl overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
-                    <div class="relative">
-                        <div class="aspect-w-16 aspect-h-9">
-                            <img src="episode-billede3.jpg" alt="Episode 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50"></div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
-                                Anbefalet
-                            </span>
-                            <span class="text-gray-400 text-sm">50 min</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-green-500 transition-colors">
-                            Episode 3: Tredje Episode Titel
-                        </h3>
-                        <p class="text-gray-400 line-clamp-3 mb-4">
-                            En kort beskrivelse der giver indsigt i episoden og hvorfor lytteren bør tune ind.
-                        </p>
-                        <button @click="showPlayer = true; currentEpisode = { title: 'Episode 3: Tredje Episode Titel', src: 'episode3.mp3' }" class="inline-flex items-center text-green-500 hover:text-green-400 transition-colors">
-                            Lyt Nu
-                            <svg class="ml-2 w-4 h-4 animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path x-show="!showPlayer" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-6.032 3.507A1 1 0 017 13.779V6.221a1 1 0 011.72-.705l6.032 3.507a1 1 0 010 1.745z"/>
-                                <path x-show="showPlayer" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </article>
-            </div>
-        </div>
-
-        <!-- Popup Media Player Modal -->
-        <div x-show="showPlayer" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50" x-cloak>
-            <div class="bg-[#1E293B] rounded-lg overflow-hidden w-11/12 md:w-2/3 lg:w-1/2">
-                <div class="flex justify-between items-center p-4 border-b border-gray-600">
-                    <h3 class="text-xl font-semibold" x-text="currentEpisode.title"></h3>
-                    <button @click="showPlayer = false; $refs.audioPlayer.pause();" class="text-gray-400 hover:text-gray-200">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.293-10.707a1 1 0 00-1.414-1.414L10 9.586 8.121 7.707a1 1 0 10-1.414 1.414L8.586 11l-1.879 1.879a1 1 0 101.414 1.414L10 12.414l1.879 1.879a1 1 0 001.414-1.414L11.414 11l1.879-1.879z" clip-rule="evenodd"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="p-6">
-                    <audio x-ref="audioPlayer" :src="currentEpisode.src" controls autoplay class="w-full">
-                        Din browser understøtter ikke lydafspilleren.
-                    </audio>
-                </div>
+            <div class="flex justify-center">
+                <!-- Embedded Podcast Player -->
+                <iframe title="Ballerup Aktivisterne - Klima Elon Musk & Donald Trump" allowtransparency="true" height="150" width="100%" style="border: none; min-width: min(100%, 430px); height:150px;" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/player-v2/?i=nxvpg-171de8c-pb&from=pb6admin&share=1&download=1&rtl=0&fonts=Arial&skin=8bbb4e&font-color=auto&logo_link=episode_page&btn-skin=fb0584" loading="lazy"></iframe>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-[#0F172A] relative overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute inset-0">
-            <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-pink-500/20 to-purple-500/20 blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 blur-3xl"></div>
-        </div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeIn">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold gradient-text">Om Podcasten</h2>
-                <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto">
-                    Vi bringer dig dybdegående samtaler om [emne], der både underholder og giver stof til eftertanke. Vores mission er at udforske spændende emner og præsentere dem på en måde, der er tilgængelig for alle.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature Card -->
-                <div class="bg-[#1E293B]/50 backdrop-blur-lg rounded-2xl p-6 hover:bg-[#1E293B]/70 transform hover:scale-105 transition-all duration-300">
-                    <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <!-- Icon path here -->
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Inspirerende Gæster</h3>
-                    <p class="text-gray-400">
-                        Vi inviterer eksperter og pionerer inden for [emne] til at dele deres unikke perspektiver.
-                    </p>
-                </div>
-                <!-- Feature Card 2 -->
-                <div class="bg-[#1E293B]/50 backdrop-blur-lg rounded-2xl p-6 hover:bg-[#1E293B]/70 transform hover:scale-105 transition-all duration-300">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <!-- Icon path here -->
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h1l3 10h11"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Dybdegående Emner</h3>
-                    <p class="text-gray-400">
-                        Vi dykker ned i komplekse emner og gør dem forståelige og relevante for vores lyttere.
-                    </p>
-                </div>
-                <!-- Feature Card 3 -->
-                <div class="bg-[#1E293B]/50 backdrop-blur-lg rounded-2xl p-6 hover:bg-[#1E293B]/70 transform hover:scale-105 transition-all duration-300">
-                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-red-500 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white animate-pulse" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <!-- Icon path here -->
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Engagerende Indhold</h3>
-                    <p class="text-gray-400">
-                        Vores episoder er designet til at holde dig engageret fra start til slut med spændende historier og indsigter.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Floating Button for Contact -->
+    <button class="floating-button" @click="window.location.href='#contact'">
+        📧
+    </button>
 
     <!-- Footer -->
-    <footer class="bg-[#0F172A] py-12">
+    <footer class="bg-[#0F172A] py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- About Section in Footer -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Om Os</h3>
-                    <p class="text-gray-400">
-                        Din Podcast er dedikeret til at bringe dig inspirerende samtaler og dybdegående indsigter om [emne]. Følg os på vores rejse for at opdage nye perspektiver.
-                    </p>
-                </div>
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Hurtige Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#episodes" class="text-gray-400 hover:text-pink-500 transition-colors">Episoder</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-pink-500 transition-colors">Om</a></li>
-                        <!-- Add more links if needed -->
-                    </ul>
-                </div>
-                <!-- Newsletter Subscription -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Tilmeld Nyhedsbrev</h3>
-                    <p class="text-gray-400 mb-4">
-                        Få de seneste opdateringer direkte i din indbakke.
-                    </p>
-                    <form action="#" method="POST" class="flex flex-col space-y-3">
-                        <input type="email" placeholder="Din Email" required class="w-full p-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:ring-2 focus:ring-pink-500 focus:outline-none transition duration-300">
-                        <button type="submit" class="w-full py-3 rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 transform hover:scale-105 transition-all duration-300 text-lg font-medium">
-                            Tilmeld
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="mt-12 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-500 text-center md:text-left">&copy; 2024 Din Podcast Titel. Alle rettigheder forbeholdes.</p>
-                <div class="mt-4 md:mt-0 flex space-x-6">
-                    <a href="#" class="text-gray-500 hover:text-pink-500 transition-colors">
-                        <span class="sr-only">Facebook</span>
-                        <!-- Facebook Icon -->
+            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-center md:text-left text-lg">&copy; 2024 Din Podcast Titel. Alle rettigheder forbeholdes.</p>
+                <div class="flex space-x-6 mt-6 md:mt-0">
+                    <a href="#" class="text-gray-500 hover:text-pink-500 transition-colors duration-300">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <!-- Facebook SVG Path -->
-                            <path d="M22 12C22 6.477 17.523 2 12 2S2 6.477 2 12c0 5.006 3.657 9.129 8.438 9.878v-6.987H7.897v-2.89h2.541V9.845c0-2.507 1.493-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.459h-1.26c-1.242 0-1.631.772-1.631 1.562v1.874h2.773l-.443 2.89h-2.33V22C18.343 21.129 22 17.006 22 12z"/>
+                            <path d="M22.54 6.42c-.81.36-1.69.6-2.6.71a4.51 4.51 0 001.98-2.48c-.87.52-1.84.9-2.87 1.1a4.51 4.51 0 00-7.68 4.11 12.82 12.82 0 01-9.3-4.72 4.51 4.51 0 001.39 6.03 4.46 4.46 0 01-2.05-.57v.06a4.51 4.51 0 003.61 4.42 4.51 4.51 0 01-2.04.08 4.51 4.51 0 004.21 3.13 9.03 9.03 0 01-5.6 1.93 8.82 8.82 0 01-1.07-.06 12.8 12.8 0 006.92 2.03c8.3 0 12.84-6.87 12.84-12.84v-.58a9.15 9.15 0 002.25-2.33z"/>
                         </svg>
                     </a>
-                    <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
-                        <span class="sr-only">Twitter</span>
-                        <!-- Twitter Icon -->
+                    <a href="#" class="text-gray-500 hover:text-pink-500 transition-colors duration-300">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <!-- Twitter SVG Path -->
-                            <path d="M22.162 5.656c-.793.352-1.644.589-2.538.696a4.48 4.48 0 0 0 1.97-2.477 8.95 8.95 0 0 1-2.833 1.083 4.476 4.476 0 0 0-7.621 4.08 12.696 12.696 0 0 1-9.219-4.676 4.478 4.478 0 0 0 1.386 5.973A4.424 4.424 0 0 1 1.64 9.096v.056a4.478 4.478 0 0 0 3.59 4.387 4.437 4.437 0 0 1-2.018.077 4.48 4.48 0 0 0 4.184 3.112A8.976 8.976 0 0 1 .927 19.554a12.676 12.676 0 0 0 6.89 2.023c8.266 0 12.787-6.848 12.787-12.786 0-.195-.005-.39-.014-.584a9.126 9.126 0 0 0 2.233-2.331z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-purple-500 transition-colors">
-                        <span class="sr-only">Instagram</span>
-                        <!-- Instagram Icon -->
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <!-- Instagram SVG Path -->
-                            <path d="M7.75 2h8.5C19.544 2 22 4.456 22 7.75v8.5C22 19.544 19.544 22 16.25 22h-8.5C4.456 22 2 19.544 2 16.25v-8.5C2 4.456 4.456 2 7.75 2zm0 2C5.679 4 4 5.679 4 7.75v8.5C4 18.321 5.679 20 7.75 20h8.5C18.321 20 20 18.321 20 16.25v-8.5C20 5.679 18.321 4 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 .001 6.001A3 3 0 0 0 12 9zm4.5-3.5a1 1 0 1 1-2.001-.001A1 1 0 0 1 16.5 5.5z"/>
+                            <path d="M19.54 3.54a2.25 2.25 0 012.25 2.25v12.42a2.25 2.25 0 01-2.25 2.25H4.46a2.25 2.25 0 01-2.25-2.25V5.79a2.25 2.25 0 012.25-2.25h15.08zm-7.54 14.33a6.67 6.67 0 100-13.34 6.67 6.67 0 000 13.34zm0-2.42a4.25 4.25 0 110-8.5 4.25 4.25 0 010 8.5zm5.08-9.42a1 1 0 110-2 1 1 0 010 2z"/>
                         </svg>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
-
 </body>
 </html>
